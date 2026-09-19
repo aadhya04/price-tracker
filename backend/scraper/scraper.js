@@ -68,7 +68,7 @@ async function scrapeOnce(productId) {
                 .find(btn => btn.textContent.trim() === "Reveal price");
 
             return button && !button.disabled;
-        }, null, { timeout: 15000 });
+        }, null, { timeout: 30000 });
 
         console.log("Clicking Reveal price...");
         await revealButton.click();
