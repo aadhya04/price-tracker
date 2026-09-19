@@ -36,8 +36,8 @@ async function getTrackedProduct(productId) {
 
 async function scrapeOnce(productId) {
     const browser = await chromium.launch({
-        headless: false
-    });
+    headless: process.env.HEADLESS === "true"
+});;
 
     const page = await browser.newPage();
 
