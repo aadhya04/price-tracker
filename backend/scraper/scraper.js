@@ -72,6 +72,12 @@ if (await revealButton.count() > 0) {
         "Reveal button HTML:",
         await revealButton.evaluate(element => element.outerHTML)
     );
+    await page.waitForTimeout(10000);
+
+console.log(
+    "Reveal button disabled after 10 seconds:",
+    await revealButton.isDisabled()
+);
 }
 
 await page.waitForFunction(() => {
