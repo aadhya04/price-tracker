@@ -60,11 +60,20 @@ async function scrapeOnce(productId) {
         });
 
         if (await revealButton.count() > 0) {
-            if (await revealButton.isVisible()) {
-                console.log("Clicking Reveal price...");
-                await revealButton.click();
-            }
-        }
+    if (await revealButton.isVisible()) {
+        console.log("Waiting for Reveal price button...");
+
+        await page.waitForFunction(() => {
+            const button = [...document.querySelectorAll("button")]
+                .find(btn => btn.textContent.trim() === "Reveal price");
+
+            return button && !button.disabled;
+        }, null, { timeout: 15000 });
+
+        console.log("Clicking Reveal price...");
+        await revealButton.click();
+    }
+}
 
         const priceBlock = page.locator(".price-block");
 
