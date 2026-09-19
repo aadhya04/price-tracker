@@ -63,12 +63,23 @@ async function scrapeOnce(productId) {
     if (await revealButton.isVisible()) {
         console.log("Waiting for Reveal price button...");
 
-        await page.waitForFunction(() => {
-            const button = [...document.querySelectorAll("button")]
-                .find(btn => btn.textContent.trim() === "Reveal price");
+        console.log("Reveal button count:", await revealButton.count());
 
-            return button && !button.disabled;
-        }, null, { timeout: 30000 });
+if (await revealButton.count() > 0) {
+    console.log("Reveal button disabled:", await revealButton.isDisabled());
+
+    console.log(
+        "Reveal button HTML:",
+        await revealButton.evaluate(element => element.outerHTML)
+    );
+}
+
+await page.waitForFunction(() => {
+    const button = [...document.querySelectorAll("button")]
+        .find(btn => btn.textContent.trim() === "Reveal price");
+
+    return button && !button.disabled;
+}, null, { timeout: 30000 });
 
         console.log("Clicking Reveal price...");
         await revealButton.click();
